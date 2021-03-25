@@ -23,11 +23,34 @@ function init() {
   renderer.setSize(window.innerWidth, window.innerHeight);
   document.body.appendChild(renderer.domElement);
 
+  //allow to move using the mouse
   const controls = new THREE.OrbitControls(camera, renderer.domElement);
   controls.target.set(0, 4, 0);
   controls.update();
 
   //Add meshes here
+  const height = 0.4;
+  const geometry = new THREE.BoxGeometry(3, height, 0.9);
+  const material = new THREE.MeshLambertMaterial({
+    color: 0xdcbbc7
+  });
+  const mesh = new THREE.Mesh(geometry, material);
+
+  for (let row = 0; row < 20; row++) {
+    let yPos = row * (height + 0.05);
+    let offset = -1;
+    for (let count = 0; count < 3; count++) {
+      const block = mesh.clone();
+      if (row % 2) {
+        block.rotation.y = Math.PI / 2;
+        block.position.set(offset, yPos, 0);
+      } else {
+        block.position.set(0, yPos, offset);
+      }
+      scene.add(block);
+      offset++;
+    }
+  }
 
   window.addEventListener('resize', resize, false);
 
