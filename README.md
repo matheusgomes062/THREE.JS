@@ -1,1 +1,1 @@
-# url-shortener-api
+# typescript-challenges
